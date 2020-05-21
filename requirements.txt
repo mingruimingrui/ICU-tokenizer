@@ -1,0 +1,4 @@
+tqdm
+PyICU
+regex
+opencc
