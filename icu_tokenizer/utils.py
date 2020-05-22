@@ -1,5 +1,9 @@
+import argparse
+import sys
 from typing import List
 
+import icu
+import regex
 from icu import BreakIterator
 
 
@@ -28,3 +32,49 @@ def get_all_unicode_chars():
             break
         i += 1
     return all_unicode_chars
+
+
+def get_versions() -> dict:
+    versions = {
+        'icu': icu.ICU_VERSION,
+        'PyICU': icu.VERSION,
+        'regex': regex.__version__
+    }
+
+    try:
+        import opencc
+        versions['opencc'] = opencc.__version__
+    except ImportError:
+        pass
+
+    return versions
+
+
+class TextFileType(argparse.FileType):
+    """argparse.FileType modified for utf-8 text files
+    """
+
+    def __init__(self, mode: str = 'r', bufsize: int = -1):
+        self._mode = mode
+        self._bufsize = bufsize
+        self._encoding = 'utf-8'
+        self._errors = 'ignore'
+
+    def __call__(self, string):
+        # the special argument "-" means sys.std{in,out}
+        if string == '-':
+            if 'r' in self._mode:
+                return sys.stdin
+            elif 'w' in self._mode:
+                return sys.stdout
+            else:
+                msg = 'argument "-" with mode {}'.format(self._mode)
+                raise ValueError(msg)
+
+        # all other arguments are used as file names
+        try:
+            return open(string, self._mode, self._bufsize, self._encoding,
+                        self._errors)
+        except OSError as e:
+            msg = "can't open '{}': {}".format(string, e)
+            raise argparse.ArgumentTypeError(msg)

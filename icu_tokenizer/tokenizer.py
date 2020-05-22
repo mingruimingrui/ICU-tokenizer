@@ -33,12 +33,12 @@ class Tokenizer(object):
         self.locale = Locale(lang)
         self.break_iterator = \
             BreakIterator.createWordInstance(self.locale)
+        self.protected_patterns = []
 
         self.annotate_hyphens = annotate_hyphens
         if self.annotate_hyphens:
             self.protected_patterns.append(self.PROTECTED_HYPHEN_PATTERN)
 
-        self.protected_patterns = []
         for pattern in protected_patterns:
             if isinstance(pattern, str):
                 pattern = re.compile(pattern)
