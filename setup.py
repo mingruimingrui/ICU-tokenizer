@@ -2,8 +2,11 @@ import setuptools
 
 
 def get_long_description():
-    with open('README.md', 'r') as f:
-        return f.read().encode('utf-8', errors='ignore')
+    with open('README.md', 'rb') as f:
+        return f.read().decode('utf-8', errors='ignore')
+
+
+install_requires = ['tqdm', 'PyICU', 'regex']
 
 
 setuptools.setup(
@@ -16,7 +19,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/mingruimingrui/ICU-tokenizer",
 
-    packages=['icu_tokenizer', 'icu_tokenize.bin'],
+    install_requires=install_requires,
+    packages=['icu_tokenizer', 'icu_tokenizer.bin'],
 
     classifiers=[
         'Intended Audience :: Developers',
@@ -33,5 +37,5 @@ setuptools.setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Localization',
     ],
-    license='MIT License',
+    license='MIT License'
 )
