@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 import unicodedata
 from typing import Dict, List
