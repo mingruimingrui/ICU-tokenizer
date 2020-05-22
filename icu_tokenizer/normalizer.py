@@ -12,8 +12,6 @@ from icu_tokenizer.utils import get_all_unicode_chars
 class Normalizer(object):
     """Performs the follow as part of normalization
     - Ensure NFKC format
-    - Remove non printable characters
-    - Normalize whitespace characters
     - Handle pseudo-spaces (for numbers)
     - Normalize by unicode category
         https://www.fileformat.info/info/unicode/category/index.htm
@@ -25,6 +23,8 @@ class Normalizer(object):
         [Pe] -> ')'  # except for '}', ']'
     - Normalize Nd (Numbers)
     - Account for some outliers
+    - Remove non printable characters
+    - Normalize whitespace characters
     - Perform language specific normalization
     """
 
@@ -60,12 +60,13 @@ class Normalizer(object):
 
     def normalize(self, text):
         text = unicodedata.normalize('NFKC', text)
-        text = self.ignore_pattern.sub(' ', text)
-        text = ' '.join(text.split())  # Normalize whitespace
 
         text = self.pseudo_num_pattern.sub(r'\1.\2', text)
         text = self.punct_pattern.sub(self._punct_replace_fn, text)
         text = self.num_pattern.sub(self._num_replace_fn, text)
+
+        text = self.ignore_pattern.sub(' ', text)
+        text = ' '.join(text.split())  # Normalize whitespace
 
         if self.t2s is not None:
             text = self.t2s.convert(text)
@@ -104,6 +105,9 @@ def make_punct_replace_map(lang: str = 'en') -> Dict[str, str]:
             punct_replace_map[c] = '('
 
     # User provided rules
+
+    # Soft hyphen
+    punct_replace_map['\xad'] = ''
 
     # Double quotes
     punct_replace_map["''"] = '"'
