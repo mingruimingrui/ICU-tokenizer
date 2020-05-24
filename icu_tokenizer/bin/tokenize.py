@@ -14,19 +14,22 @@ CACHE = {}
 
 def add_options(parser: argparse.ArgumentParser):
     parser.add_argument(
-        '-l', '--lang', type=str, default='en',
-        help='Language identifier')
-    parser.add_argument(
-        '-a', '--annotate-hyphens', action='store_true',
-        help='Annotate hyphens similar to moses')
-
-    parser.add_argument(
         '-i', '--inputs', type=TextFileType('r'),
         nargs='+', default=[sys.stdin],
         help='Input files. Defaults to stdin.')
     parser.add_argument(
         '-o', '--output', type=TextFileType('w'), default=sys.stdout,
         help='Output file. Defaults to stdout.')
+
+    parser.add_argument(
+        '-l', '--lang', type=str, default='en',
+        help='Language identifier')
+    parser.add_argument(
+        '-a', '--annotate-hyphens', action='store_true',
+        help='Annotate hyphens similar to moses')
+    parser.add_argument(
+        '-url', '--protect-urls', action='store_true',
+        help='Protect url patterns')
 
     parser.add_argument(
         '-j', '--num-workers', type=int, default=0,
@@ -64,7 +67,7 @@ def main(args: argparse.Namespace):
     with multiprocessing.Pool(
         args.num_workers,
         initializer=worker_init_fn,
-        initargs=[args.lang, args.annotate_hyphens]
+        initargs=[args.lang, args.annotate_hyphens, args.protect_urls]
     ) as pool:
         for chunk in pool.imap(worker_fn, create_chunk_input_stream()):
             if pbar is not None:
@@ -77,8 +80,12 @@ def main(args: argparse.Namespace):
         pbar.close()
 
 
-def worker_init_fn(lang: str, annotate_hyphens: bool):
-    CACHE['tokenizer'] = Tokenizer(lang, annotate_hyphens=annotate_hyphens)
+def worker_init_fn(lang: str, annotate_hyphens: bool, protect_urls: bool):
+    CACHE['tokenizer'] = Tokenizer(
+        lang,
+        annotate_hyphens=annotate_hyphens,
+        protect_urls=protect_urls
+    )
 
 
 def worker_fn(texts):

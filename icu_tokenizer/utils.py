@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import re
 import sys
 from typing import List
 
@@ -80,3 +81,8 @@ class TextFileType(argparse.FileType):
         except OSError as e:
             msg = "can't open '{}': {}".format(string, e)
             raise argparse.ArgumentTypeError(msg)
+
+
+# A customized grubber v1 URL matcher
+# Designed to work with urls starting with https, http, ftp, or www
+grubber_url_matcher = re.compile(r'(?i)\b((?:(?:https|http|ftp):/{1,3}|www[.])[^\s()<>]+(?:\([\w\d]+\)|(?:[^!"#$%&\'()*+,\-./:;<=>?@\[\]\s]|/)))')  # noqa

@@ -1,10 +1,9 @@
 import re
 from typing import List, Union
 
-from regex import regex as _regex
 from icu import BreakIterator, Locale
 
-from icu_tokenizer.utils import apply_break_iterator
+from icu_tokenizer.utils import apply_break_iterator, grubber_url_matcher
 
 PROTECTED_TEMPLATE = '__PROTECTED_SEQUENCE_{}__'
 
@@ -20,14 +19,16 @@ class Tokenizer(object):
         self,
         lang: str = 'en',
         annotate_hyphens: bool = False,
-        protected_patterns: List[Union[str, re.Pattern, _regex.Pattern]] = [],
+        protect_urls: bool = False,
+        extra_protected_patterns: List[Union[str, re.Pattern]] = [],
     ):
         """
         Keyword Arguments:
             lang {str} -- language identifier (default: {'en'})
             annotate_hyphens {bool} -- Protect dashes (default: {False})
-            protected_patterns {List[Union[str, re.Pattern, _regex.Pattern]]}
-                -- A list of regex patterns (default: {[]})
+            protect_urls {bool} -- Protect urls (default: {False})
+            extra_protected_patterns {List[Union[str, re.Pattern]]} --
+                A list of regex patterns (default: {[]})
         """
         self.lang = lang
         self.locale = Locale(lang)
@@ -39,7 +40,10 @@ class Tokenizer(object):
         if self.annotate_hyphens:
             self.protected_patterns.append(self.PROTECTED_HYPHEN_PATTERN)
 
-        for pattern in protected_patterns:
+        if protect_urls:
+            self.protected_patterns.append(grubber_url_matcher)
+
+        for pattern in extra_protected_patterns:
             if isinstance(pattern, str):
                 pattern = re.compile(pattern)
             self.protected_patterns.append(pattern)
