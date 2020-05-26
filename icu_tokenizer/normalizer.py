@@ -28,7 +28,7 @@ class Normalizer(object):
     - Perform language specific normalization
     """
 
-    def __init__(self, lang='en'):
+    def __init__(self, lang: str = 'en', norm_puncts: bool = False):
         # Handle control tokens
         self.ignore_pattern = regex.compile(r'\p{C}|\p{So}|\p{Z}')
 
@@ -38,12 +38,21 @@ class Normalizer(object):
         self.pseudo_num_pattern = re.compile(r'(\d) (\d)')
 
         # Punctuation and number replace maps
-        self.punct_replace_map = make_punct_replace_map(lang)
-        self.punct_pattern = \
-            make_pattern_from_keys(self.punct_replace_map.keys())
         self.num_pattern = regex.compile(r'\p{Nd}+')
+        self.punct_replace_map = self.punct_pattern = None
+        if norm_puncts:
+            self.punct_replace_map = make_punct_replace_map(lang)
+            self.punct_pattern = \
+                make_pattern_from_keys(self.punct_replace_map.keys())
 
         # Other language specific normalizers
+        lang_replace_map = make_lang_specific_replace_map(lang)
+        self.lang_replace_map = self.lang_replace_pattern = None
+        if len(lang_replace_map) > 0:
+            self.lang_replace_map = lang_replace_map
+            self.lang_replace_pattern = \
+                make_pattern_from_keys(lang_replace_map.keys())
+
         self.t2s = None
         if lang == 'zh' or lang.startswith('zh_'):
             try:
@@ -52,21 +61,28 @@ class Normalizer(object):
                 raise ImportError('OpenCC library not found')
             self.t2s = OpenCC('t2s')
 
+    def _num_replace_fn(self, match):
+        return str(int(match.group(0)))
+
     def _punct_replace_fn(self, match):
         return self.punct_replace_map[match.group(0)]
 
-    def _num_replace_fn(self, match):
-        return str(int(match.group(0)))
+    def _lang_replace_fn(self, match):
+        return self.lang_replace_map[match.group(0)]
 
     def normalize(self, text):
         text = unicodedata.normalize('NFKC', text)
 
         text = self.pseudo_num_pattern.sub(r'\1.\2', text)
-        text = self.punct_pattern.sub(self._punct_replace_fn, text)
         text = self.num_pattern.sub(self._num_replace_fn, text)
+        if self.punct_pattern is not None:
+            text = self.punct_pattern.sub(self._punct_replace_fn, text)
 
         text = self.ignore_pattern.sub(' ', text)
         text = ' '.join(text.split())  # Normalize whitespace
+
+        if self.lang_replace_pattern is not None:
+            text = self.lang_replace_pattern(self._lang_replace_fn, text)
 
         if self.t2s is not None:
             text = self.t2s.convert(text)
@@ -145,28 +161,33 @@ def make_punct_replace_map(lang: str = 'en') -> Dict[str, str]:
     # Others
     punct_replace_map['…'] = '...'
 
-    # Consider moving this out of here in the future
+    return punct_replace_map
+
+
+def make_lang_specific_replace_map(lang: str = 'en') -> Dict[str, str]:
+    replace_map = {}
+
     if lang == 'ro':
         # Remove diacritics for romanian
-        punct_replace_map['Ş'] = 'S'
-        punct_replace_map['ş'] = 's'
+        replace_map['Ş'] = 'S'
+        replace_map['ş'] = 's'
 
-        punct_replace_map['Ș'] = 'S'
-        punct_replace_map['ș'] = 's'
+        replace_map['Ș'] = 'S'
+        replace_map['ș'] = 's'
 
-        punct_replace_map['Ţ'] = 'T'
-        punct_replace_map['ţ'] = 't'
+        replace_map['Ţ'] = 'T'
+        replace_map['ţ'] = 't'
 
-        punct_replace_map['Ț'] = 'T'
-        punct_replace_map['ț'] = 't'
+        replace_map['Ț'] = 'T'
+        replace_map['ț'] = 't'
 
-        punct_replace_map['Ă'] = 'A'
-        punct_replace_map['ă'] = 'a'
+        replace_map['Ă'] = 'A'
+        replace_map['ă'] = 'a'
 
-        punct_replace_map['Â'] = 'A'
-        punct_replace_map['â'] = 'a'
+        replace_map['Â'] = 'A'
+        replace_map['â'] = 'a'
 
-        punct_replace_map['Î'] = 'I'
-        punct_replace_map['î'] = 'i'
+        replace_map['Î'] = 'I'
+        replace_map['î'] = 'i'
 
-    return punct_replace_map
+    return replace_map

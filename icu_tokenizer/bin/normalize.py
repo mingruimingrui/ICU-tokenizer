@@ -16,6 +16,9 @@ def add_options(parser: argparse.ArgumentParser):
     parser.add_argument(
         '-l', '--lang', type=str, default='en',
         help='Language identifier')
+    parser.add_argument(
+        '-p', '--norm-puncts', action='store_true',
+        help='Normalize punctuations')
 
     parser.add_argument(
         '-i', '--inputs', type=TextFileType('r'),
@@ -61,7 +64,7 @@ def main(args: argparse.Namespace):
     with multiprocessing.Pool(
         args.num_workers,
         initializer=worker_init_fn,
-        initargs=[args.lang]
+        initargs=[args.lang, args.norm_puncts]
     ) as pool:
         for chunk in pool.imap(worker_fn, create_chunk_input_stream()):
             if pbar is not None:
@@ -74,8 +77,8 @@ def main(args: argparse.Namespace):
         pbar.close()
 
 
-def worker_init_fn(lang: str):
-    CACHE['normalizer'] = Normalizer(lang)
+def worker_init_fn(lang: str, norm_puncts: bool):
+    CACHE['normalizer'] = Normalizer(lang, norm_puncts)
 
 
 def worker_fn(texts):
