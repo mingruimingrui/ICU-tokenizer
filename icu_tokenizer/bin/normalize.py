@@ -19,6 +19,9 @@ def add_options(parser: argparse.ArgumentParser):
     parser.add_argument(
         '-p', '--norm-puncts', action='store_true',
         help='Normalize punctuations')
+    parser.add_argument(
+        '-lc', '--lowercase', action='store_true',
+        help='Cast all characters to lowercase')
 
     parser.add_argument(
         '-i', '--inputs', type=TextFileType('r'),
@@ -64,7 +67,7 @@ def main(args: argparse.Namespace):
     with multiprocessing.Pool(
         args.num_workers,
         initializer=worker_init_fn,
-        initargs=[args.lang, args.norm_puncts]
+        initargs=[args.lang, args.norm_puncts, args.lowercase]
     ) as pool:
         for chunk in pool.imap(worker_fn, create_chunk_input_stream()):
             if pbar is not None:
@@ -77,10 +80,14 @@ def main(args: argparse.Namespace):
         pbar.close()
 
 
-def worker_init_fn(lang: str, norm_puncts: bool):
+def worker_init_fn(lang: str, norm_puncts: bool, lowercase: bool):
     CACHE['normalizer'] = Normalizer(lang, norm_puncts)
+    CACHE['lowercase'] = lowercase
 
 
 def worker_fn(texts):
     normalize_fn = CACHE['normalizer'].normalize
-    return [normalize_fn(t) for t in texts]
+    texts = [normalize_fn(t) for t in texts]
+    if CACHE['lowercase']:
+        texts = [t.lower() for t in texts]
+    return texts
