@@ -9,7 +9,7 @@ PROTECTED_TEMPLATE = '__PROTECTED_SEQUENCE_{}__'
 
 
 class Tokenizer(object):
-    """ICU tokenizer"""
+    """Tokenizer."""
 
     HYPHEN_PATTERN = re.compile(r'(\w)\-(?=\w)')
     HYPHEN_PATTERN_REPL = r'\1 @-@ '
@@ -22,7 +22,8 @@ class Tokenizer(object):
         protect_urls: bool = False,
         extra_protected_patterns: List[Union[str, re.Pattern]] = [],
     ):
-        """
+        """Tokenizer.
+
         Keyword Arguments:
             lang {str} -- language identifier (default: {'en'})
             annotate_hyphens {bool} -- Protect dashes (default: {False})
@@ -49,6 +50,14 @@ class Tokenizer(object):
             self.protected_patterns.append(pattern)
 
     def tokenize(self, text: str) -> List[str]:
+        """Tokenize text into list of tokens.
+
+        Args:
+            text (str): Raw input text.
+
+        Returns:
+            List[str]: List of tokens.
+        """
         if self.annotate_hyphens:
             text = self.HYPHEN_PATTERN.sub(self.HYPHEN_PATTERN_REPL, text)
 

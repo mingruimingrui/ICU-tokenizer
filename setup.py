@@ -2,6 +2,7 @@ import setuptools
 
 
 def get_long_description():
+    """Reads and return README as a string."""
     with open('README.md', 'rb') as f:
         return f.read().decode('utf-8', errors='ignore')
 

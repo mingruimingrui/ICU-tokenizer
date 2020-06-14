@@ -14,6 +14,7 @@ def apply_break_iterator(
     break_iterator: BreakIterator,
     text: str
 ) -> List[str]:
+    """Apply ICU break iterator on a text."""
     break_iterator.setText(text)
     parts = []
     p0 = 0
@@ -26,6 +27,7 @@ def apply_break_iterator(
 
 
 def get_all_unicode_chars():
+    """Get all unicode characters."""
     all_unicode_chars = []
     i = 0
     while True:
@@ -38,6 +40,7 @@ def get_all_unicode_chars():
 
 
 def get_versions() -> dict:
+    """Get versions of the various dependecies related to icu_tokenizer."""
     versions = {
         'icu': icu.ICU_VERSION,
         'PyICU': icu.VERSION,
@@ -54,16 +57,16 @@ def get_versions() -> dict:
 
 
 class TextFileType(argparse.FileType):
-    """argparse.FileType modified for utf-8 text files
-    """
+    """argparse.FileType modified for utf-8 text files."""
 
     def __init__(self, mode: str = 'r', bufsize: int = -1):
+        """TextFileType."""
         self._mode = mode
         self._bufsize = bufsize
         self._encoding = 'utf-8'
         self._errors = 'ignore'
 
-    def __call__(self, string):
+    def __call__(self, string):  # noqa
         # the special argument "-" means sys.std{in,out}
         if string == '-':
             if 'r' in self._mode:

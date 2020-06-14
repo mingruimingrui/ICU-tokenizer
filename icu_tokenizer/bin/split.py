@@ -1,5 +1,4 @@
-"""Split lines containing multiple sentences
-"""
+"""Split lines containing multiple sentences."""
 
 import sys
 import argparse
@@ -13,6 +12,7 @@ CACHE = {}
 
 
 def add_options(parser: argparse.ArgumentParser):
+    """Add options to a parser."""
     parser.add_argument(
         '-l', '--lang', type=str, default='en',
         help='Language identifier')
@@ -36,7 +36,7 @@ def add_options(parser: argparse.ArgumentParser):
         help='Print splits to stderr')
 
 
-def main(args: argparse.Namespace):
+def main(args: argparse.Namespace):  # noqa
     if args.num_workers == 0:
         import multiprocessing.dummy as multiprocessing
         args.num_workers = 1
@@ -81,10 +81,10 @@ def main(args: argparse.Namespace):
         pbar.close()
 
 
-def worker_init_fn(lang: str):
+def worker_init_fn(lang: str):  # noqa
     CACHE['sent_splitter'] = SentSplitter(lang)
 
 
-def worker_fn(texts):
+def worker_fn(texts):  # noqa
     split_fn = CACHE['sent_splitter'].split
     return [split_fn(t) for t in texts]

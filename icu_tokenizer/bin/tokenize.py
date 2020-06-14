@@ -1,5 +1,4 @@
-"""Tokenize text using unicode properties
-"""
+"""Tokenize text using unicode properties."""
 
 import sys
 import argparse
@@ -13,6 +12,7 @@ CACHE = {}
 
 
 def add_options(parser: argparse.ArgumentParser):
+    """Add options to a parser."""
     parser.add_argument(
         '-i', '--inputs', type=TextFileType('r'),
         nargs='+', default=[sys.stdin],
@@ -39,7 +39,7 @@ def add_options(parser: argparse.ArgumentParser):
         help='Show progressbar')
 
 
-def main(args: argparse.Namespace):
+def main(args: argparse.Namespace):  # noqa
     if args.num_workers == 0:
         import multiprocessing.dummy as multiprocessing
         args.num_workers = 1
@@ -80,7 +80,7 @@ def main(args: argparse.Namespace):
         pbar.close()
 
 
-def worker_init_fn(lang: str, annotate_hyphens: bool, protect_urls: bool):
+def worker_init_fn(lang: str, annotate_hyphens: bool, protect_urls: bool):  # noqa
     CACHE['tokenizer'] = Tokenizer(
         lang,
         annotate_hyphens=annotate_hyphens,
@@ -88,6 +88,6 @@ def worker_init_fn(lang: str, annotate_hyphens: bool, protect_urls: bool):
     )
 
 
-def worker_fn(texts):
+def worker_fn(texts):  # noqa
     tokenize_fn = CACHE['tokenizer'].tokenize
     return [' '.join(tokenize_fn(t)) for t in texts]

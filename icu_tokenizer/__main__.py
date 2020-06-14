@@ -14,6 +14,7 @@ SUBCOMMANDS: Dict[str, ModuleType] = {
 
 
 def make_parser() -> argparse.ArgumentParser:
+    """Make the parser for the main program."""
     parser = argparse.ArgumentParser(
         prog='python3 -m mt_experiments',
         description='Machine Translation Experimentation Toolkit'

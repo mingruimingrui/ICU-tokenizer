@@ -10,7 +10,9 @@ from icu_tokenizer.utils import get_all_unicode_chars
 
 
 class Normalizer(object):
-    """Performs the follow as part of normalization
+    """Unicode information based normalizer.
+
+    Does the following
     - Ensure NFKC format
     - Handle pseudo-spaces (for numbers)
     - Normalize by unicode category
@@ -29,6 +31,13 @@ class Normalizer(object):
     """
 
     def __init__(self, lang: str = 'en', norm_puncts: bool = False):
+        """Normalizer.
+
+        Args:
+            lang (str, optional): Language identifier. Defaults to 'en'.
+            norm_puncts (bool, optional): Normalize punctuations?.
+                Defaults to False.
+        """
         # Handle control tokens
         self.ignore_pattern = regex.compile(r'\p{C}|\p{So}|\p{Z}')
 
@@ -41,7 +50,7 @@ class Normalizer(object):
         self.num_pattern = regex.compile(r'\p{Nd}+')
         self.punct_replace_map = self.punct_pattern = None
         if norm_puncts:
-            self.punct_replace_map = make_punct_replace_map(lang)
+            self.punct_replace_map = make_punct_replace_map()
             self.punct_pattern = \
                 make_pattern_from_keys(self.punct_replace_map.keys())
 
@@ -61,16 +70,24 @@ class Normalizer(object):
                 raise ImportError('OpenCC library not found')
             self.t2s = OpenCC('t2s')
 
-    def _num_replace_fn(self, match):
+    def _num_replace_fn(self, match: re.Match) -> str:
         return str(int(match.group(0)))
 
-    def _punct_replace_fn(self, match):
+    def _punct_replace_fn(self, match: re.Match) -> str:
         return self.punct_replace_map[match.group(0)]
 
-    def _lang_replace_fn(self, match):
+    def _lang_replace_fn(self, match: re.Match) -> str:
         return self.lang_replace_map[match.group(0)]
 
-    def normalize(self, text):
+    def normalize(self, text: str) -> str:
+        """Perform normalization.
+
+        Args:
+            text (str): Input text
+
+        Returns:
+            str: Normalized text
+        """
         text = unicodedata.normalize('NFKC', text)
 
         text = self.pseudo_num_pattern.sub(r'\1.\2', text)
@@ -90,13 +107,15 @@ class Normalizer(object):
         return text
 
 
-def make_pattern_from_keys(keys: List[str]):
+def make_pattern_from_keys(keys: List[str]) -> re.Pattern:
+    """Make a re.Pattern that matches a list of strings."""
     keys = sorted(keys, key=lambda x: len(x), reverse=True)
     pattern_str = r'|'.join(re.escape(k) for k in keys)
     return re.compile(pattern_str)
 
 
-def make_punct_replace_map(lang: str = 'en') -> Dict[str, str]:
+def make_punct_replace_map() -> Dict[str, str]:
+    """Make the punctuation replace map."""
     # Generate punctuation and number replace maps
     punct_replace_map = {}
 
@@ -165,6 +184,7 @@ def make_punct_replace_map(lang: str = 'en') -> Dict[str, str]:
 
 
 def make_lang_specific_replace_map(lang: str = 'en') -> Dict[str, str]:
+    """Create a language specific replace map."""
     replace_map = {}
 
     if lang == 'ro':
