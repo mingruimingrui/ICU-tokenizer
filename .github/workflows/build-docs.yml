@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: 3.7
     - run: DEBIAN_FRONTEND=noninteractive \
-        sudo install -y g++ libicu-dev pkg-config
+        install -y g++ libicu-dev pkg-config
     - run: python -m pip install --no-cache-dir .
     - run: python -m pip install --no-cache-dir -r docs/requirements.txt
     - run: sphinx-build -b html docs public
