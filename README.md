@@ -2,10 +2,15 @@
 normalization and tokenization using the International Components for
 Unicode.
 
+- [Install](#install)
 - [Usage (Python)](#usage-python)
   - [Sentence splitter](#sentence-splitter)
   - [Normalizer](#normalizer)
   - [Tokenizer](#tokenizer)
+
+## Install
+
+See [./INSTALL.md](./INSTALL.md)
 
 ## Usage (Python)
 
