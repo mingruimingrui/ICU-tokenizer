@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import re
 import sys
 from typing import List
 
