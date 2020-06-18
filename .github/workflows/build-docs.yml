@@ -37,14 +37,12 @@ jobs:
     - name: Commit documentation changes
       run: |
         git clone https://github.com/mingruimingrui/ICU-tokenizer.git --branch gh-pages --single-branch gh-pages
-        cp -r docs/_build/html/* gh-pages/
+        cp -r public/* gh-pages/
         cd gh-pages
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
         git commit -m "Update documentation" -a || true
-        # The above command will fail if no changes were present, so we ignore
-        # that.
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
