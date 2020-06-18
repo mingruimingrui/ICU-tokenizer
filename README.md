@@ -1,23 +1,14 @@
-**ICU-tokenizer** uses unicode information to perform universal language
-tokenization.
+**ICU-tokenizer** is a python package used to perform universal language
+normalization and tokenization using the International Components for
+Unicode.
+
+Currently this package supports the following features:
+
+- Sentence splitting
+- Text normalization
+- Word Tokenization
 
 # Usage (Python)
-
-## Normalizer
-
-```py
-# To normalize text
->>> from icu_tokenizer import Normalizer
->>> normalizer = Normalizer(lang='en', norm_puncts=True)
-
->>> text = "𝑻𝒉𝒆 𝒑𝒓𝒐𝒅𝒖𝒄𝒕𝒔 𝒚𝒐𝒖 𝒐𝒓𝒅𝒆𝒓𝒆𝒅 𝒘𝒊𝒍𝒍 𝒃𝒆 𝒔𝒉𝒊𝒑𝒑𝒆𝒅 𝒅𝒊𝒓𝒆𝒄𝒕𝒍𝒚 𝒇𝒓𝒐𝒎 𝑲𝒐𝒓𝒆𝒂."
->>> normalizer.normalize(text)
-"The products you ordered will be shipped directly from Korea."
-
->>> text = "【】（）"
->>> normalizer.normalize(text)
-"[]()"
-```
 
 ## Sentence splitter
 
@@ -36,6 +27,22 @@ tokenization.
     '在美国的法律制度中，最高法院通常是包括《美国宪法》在内的联邦法律的最终解释者，但仅在具有管辖权的案件范围内。',
     '法院不享有判定政治问题的权力；政治问题的执法机关是行政机关，而不是政府的司法部门。'
 ]
+```
+
+## Normalizer
+
+```py
+# To normalize text
+>>> from icu_tokenizer import Normalizer
+>>> normalizer = Normalizer(lang='en', norm_puncts=True)
+
+>>> text = "𝑻𝒉𝒆 𝒑𝒓𝒐𝒅𝒖𝒄𝒕𝒔 𝒚𝒐𝒖 𝒐𝒓𝒅𝒆𝒓𝒆𝒅 𝒘𝒊𝒍𝒍 𝒃𝒆 𝒔𝒉𝒊𝒑𝒑𝒆𝒅 𝒅𝒊𝒓𝒆𝒄𝒕𝒍𝒚 𝒇𝒓𝒐𝒎 𝑲𝒐𝒓𝒆𝒂."
+>>> normalizer.normalize(text)
+"The products you ordered will be shipped directly from Korea."
+
+>>> text = "【】（）"
+>>> normalizer.normalize(text)
+"[]()"
 ```
 
 ## Tokenizer
