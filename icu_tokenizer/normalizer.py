@@ -13,16 +13,17 @@ class Normalizer(object):
     """Unicode information based normalizer.
 
     Does the following
+
     - Ensure NFKC format
     - Handle pseudo-spaces (for numbers)
-    - Normalize by unicode category
-        https://www.fileformat.info/info/unicode/category/index.htm
-        [C*|So|Z*] -> ' '
-        [Pc] -> '_'
-        [Pd] -> '-'
-        [Pf|Pi] -> '"'  # except for apostrophes
-        [Ps] -> '('  # except for '{', '['
-        [Pe] -> ')'  # except for '}', ']'
+    - Normalize by unicode categories
+      https://www.fileformat.info/info/unicode/category/index.htm
+        - ``[C*|So|Z*]`` &rarr; ' '
+        - ``[Pc]`` &rarr; ``_``
+        - ``[Pd]`` &rarr; ``-``
+        - ``[Pf|Pi]`` &rarr; ``"``  (except for ``'``)
+        - ``[Ps]`` &rarr; ``(``  (except for ``{``, ``[``)
+        - ``[Pe]`` &rarr; ``)``  (except for ``}``, ``]``)
     - Normalize Nd (Numbers)
     - Account for some outliers
     - Remove non printable characters
@@ -159,6 +160,8 @@ def make_punct_replace_map() -> Dict[str, str]:
     # Brackets
     punct_replace_map['【'] = '['
     punct_replace_map['】'] = ']'
+    punct_replace_map['［'] = '['
+    punct_replace_map['］'] = ']'
 
     # Common unicode variations
     punct_replace_map['∶'] = ':'
