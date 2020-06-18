@@ -16,14 +16,15 @@ class Normalizer(object):
 
     - Ensure NFKC format
     - Handle pseudo-spaces (for numbers)
-    - Normalize by unicode categories
+    - Normalize by unicode categories \
       https://www.fileformat.info/info/unicode/category/index.htm
-        - ``[C*|So|Z*]`` &rarr; ' '
-        - ``[Pc]`` &rarr; ``_``
-        - ``[Pd]`` &rarr; ``-``
-        - ``[Pf|Pi]`` &rarr; ``"``  (except for ``'``)
-        - ``[Ps]`` &rarr; ``(``  (except for ``{``, ``[``)
-        - ``[Pe]`` &rarr; ``)``  (except for ``}``, ``]``)
+
+        - ``[C*|So|Z*]`` → ' '
+        - ``[Pc]`` → ``_``
+        - ``[Pd]`` → ``-``
+        - ``[Pf|Pi]`` → ``"``  (except for ``'``)
+        - ``[Ps]`` → ``(``  (except for ``{``, ``[``)
+        - ``[Pe]`` → ``)``  (except for ``}``, ``]``)
     - Normalize Nd (Numbers)
     - Account for some outliers
     - Remove non printable characters
