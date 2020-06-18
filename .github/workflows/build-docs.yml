@@ -4,7 +4,7 @@ on:
   create:
     push:
       branches:
-        master
+        - master
     tags:
       - v*
 
