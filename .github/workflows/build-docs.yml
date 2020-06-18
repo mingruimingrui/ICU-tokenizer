@@ -29,10 +29,11 @@ jobs:
         python -m pip install --no-cache-dir .
         python -m pip install --no-cache-dir -r docs/requirements.txt
 
-    - name: Build docs
-      run: sphinx-build -b html docs public
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: docs
-        path: public/
+    - name: Build and Deploy
+      uses: JacksonMaxfield/github-pages-deploy-action-python@master
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master
+        BRANCH: gh-pages
+        FOLDER: public
+        BUILD_SCRIPT: sphinx-build -b html docs public
