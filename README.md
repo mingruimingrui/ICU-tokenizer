@@ -2,15 +2,14 @@
 normalization and tokenization using the International Components for
 Unicode.
 
-Currently this package supports the following features:
+- [Usage (Python)](#usage-python)
+  - [Sentence splitter](#sentence-splitter)
+  - [Normalizer](#normalizer)
+  - [Tokenizer](#tokenizer)
 
-- Sentence splitting
-- Text normalization
-- Word Tokenization
+## Usage (Python)
 
-# Usage (Python)
-
-## Sentence splitter
+### Sentence splitter
 
 ```py
 # To split a paragraph into multiple sentences
@@ -29,7 +28,7 @@ Currently this package supports the following features:
 ]
 ```
 
-## Normalizer
+### Normalizer
 
 ```py
 # To normalize text
@@ -45,7 +44,7 @@ Currently this package supports the following features:
 "[]()"
 ```
 
-## Tokenizer
+### Tokenizer
 
 ```py
 >>> from icu_tokenizer import Tokenizer
