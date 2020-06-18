@@ -7,7 +7,8 @@ def get_long_description():
         return f.read().decode('utf-8', errors='ignore')
 
 
-install_requires = ['tqdm', 'PyICU', 'regex']
+with open('requirements.txt', 'r') as f:
+    install_requires = f.read()
 
 
 setuptools.setup(
