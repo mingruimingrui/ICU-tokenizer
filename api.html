@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python API Reference &mdash; ICU-Tokenizer 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Commandline Tools" href="tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ICU-Tokenizer
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Library Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Commandline Tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sentence-splitter">Sentence Splitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#normalizer">Normalizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tokenizer">Tokenizer</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ICU-Tokenizer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Python API Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-api-reference">
+<h1>Python API Reference<a class="headerlink" href="#python-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sentence-splitter">
+<h2>Sentence Splitter<a class="headerlink" href="#sentence-splitter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="icu_tokenizer.sent_splitter.SentSplitter">
+<em class="property">class </em><code class="descclassname">icu_tokenizer.sent_splitter.</code><code class="descname">SentSplitter</code><span class="sig-paren">(</span><em><span class="n">lang</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'en'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/icu_tokenizer/sent_splitter.html#SentSplitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.sent_splitter.SentSplitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>ICU sentence splitter.</p>
+<p>Usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitter</span> <span class="o">=</span> <span class="n">SentSplitter</span><span class="p">(</span><span class="n">lang</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">splitter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">paragraph</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="icu_tokenizer.sent_splitter.SentSplitter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em><span class="n">lang</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'en'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/icu_tokenizer/sent_splitter.html#SentSplitter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.sent_splitter.SentSplitter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>SentSplitter.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="icu_tokenizer.sent_splitter.SentSplitter.split">
+<code class="descname">split</code><span class="sig-paren">(</span><em><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/icu_tokenizer/sent_splitter.html#SentSplitter.split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.sent_splitter.SentSplitter.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a sentence with the ICU sentence splitter.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="normalizer">
+<h2>Normalizer<a class="headerlink" href="#normalizer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="icu_tokenizer.normalizer.Normalizer">
+<em class="property">class </em><code class="descclassname">icu_tokenizer.normalizer.</code><code class="descname">Normalizer</code><span class="sig-paren">(</span><em><span class="n">lang</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'en'</span></em>, <em><span class="n">norm_puncts</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/icu_tokenizer/normalizer.html#Normalizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.normalizer.Normalizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unicode information based normalizer.</p>
+<p>Does the following</p>
+<ul>
+<li><p class="first">Ensure NFKC format</p>
+</li>
+<li><p class="first">Handle pseudo-spaces (for numbers)</p>
+</li>
+<li><p class="first">Normalize by unicode categories       <a class="reference external" href="https://www.fileformat.info/info/unicode/category/index.htm">https://www.fileformat.info/info/unicode/category/index.htm</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">[C*|So|Z*]</span></code> → ‘ ‘</li>
+<li><code class="docutils literal notranslate"><span class="pre">[Pc]</span></code> → <code class="docutils literal notranslate"><span class="pre">_</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">[Pd]</span></code> → <code class="docutils literal notranslate"><span class="pre">-</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">[Pf|Pi]</span></code> → <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>  (except for <code class="docutils literal notranslate"><span class="pre">'</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">[Ps]</span></code> → <code class="docutils literal notranslate"><span class="pre">(</span></code>  (except for <code class="docutils literal notranslate"><span class="pre">{</span></code>, <code class="docutils literal notranslate"><span class="pre">[</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">[Pe]</span></code> → <code class="docutils literal notranslate"><span class="pre">)</span></code>  (except for <code class="docutils literal notranslate"><span class="pre">}</span></code>, <code class="docutils literal notranslate"><span class="pre">]</span></code>)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Normalize Nd (Numbers)</p>
+</li>
+<li><p class="first">Account for some outliers</p>
+</li>
+<li><p class="first">Remove non printable characters</p>
+</li>
+<li><p class="first">Normalize whitespace characters</p>
+</li>
+<li><p class="first">Perform language specific normalization</p>
+</li>
+</ul>
+<p>Usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="n">norm_puncts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">norm_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="icu_tokenizer.normalizer.Normalizer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em><span class="n">lang</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'en'</span></em>, <em><span class="n">norm_puncts</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/icu_tokenizer/normalizer.html#Normalizer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.normalizer.Normalizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalizer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lang</strong> (<em>str</em><em>, </em><em>optional</em>) – Language identifier. Defaults to ‘en’.</li>
+<li><strong>norm_puncts</strong> (<em>bool</em><em>, </em><em>optional</em>) – Normalize punctuations?.
+Defaults to False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py method">
+<dt id="icu_tokenizer.normalizer.Normalizer.normalize">
+<code class="descname">normalize</code><span class="sig-paren">(</span><em><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/icu_tokenizer/normalizer.html#Normalizer.normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.normalizer.Normalizer.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform normalization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<em>str</em>) – Input text</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Normalized text</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tokenizer">
+<h2>Tokenizer<a class="headerlink" href="#tokenizer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="icu_tokenizer.tokenizer.Tokenizer">
+<em class="property">class </em><code class="descclassname">icu_tokenizer.tokenizer.</code><code class="descname">Tokenizer</code><span class="sig-paren">(</span><em><span class="n">lang</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'en'</span></em>, <em><span class="n">annotate_hyphens</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em><span class="n">protect_emails_urls</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em><span class="n">extra_protected_patterns</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Union<span class="p">[</span>str<span class="p">, </span>re.Pattern<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/icu_tokenizer/tokenizer.html#Tokenizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.tokenizer.Tokenizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>ICU based tokenizer with additional functionality to protect sequences.</p>
+<p>Usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span>
+<span class="go">        lang,</span>
+<span class="go">        annotate_hyphens: bool,</span>
+<span class="go">        protect_emails_urls: bool,</span>
+<span class="go">        extra_protected_patterns: List[Union[str, re.Pattern]] = [],</span>
+<span class="go">    )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="icu_tokenizer.tokenizer.Tokenizer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em><span class="n">lang</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'en'</span></em>, <em><span class="n">annotate_hyphens</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em><span class="n">protect_emails_urls</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em><span class="n">extra_protected_patterns</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Union<span class="p">[</span>str<span class="p">, </span>re.Pattern<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/icu_tokenizer/tokenizer.html#Tokenizer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.tokenizer.Tokenizer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tokenizer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>{str} -- language identifier</strong><strong> (</strong><strong>default</strong> (<em>lang</em>) – {‘en’})</li>
+<li><strong>{bool} -- Protect dashes</strong><strong> (</strong><strong>default</strong> (<em>annotate_hyphens</em>) – {False})</li>
+<li><strong>{bool} -- Protect urls</strong><strong> (</strong><strong>default</strong> (<em>protect_emails_urls</em>) – {False})</li>
+<li><strong>{List</strong><strong>[</strong><strong>Union</strong><strong>[</strong><strong>str</strong><strong>, </strong><strong>re.Pattern</strong><strong>]</strong><strong>]</strong><strong>} --</strong> (<em>extra_protected_patterns</em>) – A list of regex patterns (default: {[]})</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py method">
+<dt id="icu_tokenizer.tokenizer.Tokenizer.tokenize">
+<code class="descname">tokenize</code><span class="sig-paren">(</span><em><span class="n">text</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/icu_tokenizer/tokenizer.html#Tokenizer.tokenize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#icu_tokenizer.tokenizer.Tokenizer.tokenize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tokenize text into list of tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<em>str</em>) – Raw input text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List of tokens.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">List[str]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tools.html" class="btn btn-neutral float-left" title="Commandline Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Ming Rui
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
