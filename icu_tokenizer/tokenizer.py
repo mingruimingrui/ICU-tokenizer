@@ -10,7 +10,18 @@ PROTECTED_TEMPLATE = '__PROTECTED_SEQUENCE_{}__'
 
 
 class Tokenizer(object):
-    """Tokenizer."""
+    """ICU based tokenizer with additional functionality to protect sequences.
+
+    Usage:
+
+    >>> tokenizer = Tokenizer(
+            lang,
+            annotate_hyphens: bool,
+            protect_emails_urls: bool,
+            extra_protected_patterns: List[Union[str, re.Pattern]] = [],
+        )
+    >>> tokens: List[str] = tokenizer.tokenize(text)
+    """
 
     HYPHEN_PATTERN = re.compile(r'(\w)\-(?=\w)')
     HYPHEN_PATTERN_REPL = r'\1 @-@ '
@@ -28,7 +39,7 @@ class Tokenizer(object):
         Keyword Arguments:
             lang {str} -- language identifier (default: {'en'})
             annotate_hyphens {bool} -- Protect dashes (default: {False})
-            protect_urls {bool} -- Protect urls (default: {False})
+            protect_emails_urls {bool} -- Protect urls (default: {False})
             extra_protected_patterns {List[Union[str, re.Pattern]]} --
                 A list of regex patterns (default: {[]})
         """

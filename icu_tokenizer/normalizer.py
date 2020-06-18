@@ -30,6 +30,11 @@ class Normalizer(object):
     - Remove non printable characters
     - Normalize whitespace characters
     - Perform language specific normalization
+
+    Usage:
+
+    >>> normalizer = Normalizer(lang, norm_puncts=True)
+    >>> norm_text: str = normalizer.normalize(text)
     """
 
     def __init__(self, lang: str = 'en', norm_puncts: bool = False):

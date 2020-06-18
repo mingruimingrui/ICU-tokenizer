@@ -6,7 +6,13 @@ from icu_tokenizer.utils import apply_break_iterator
 
 
 class SentSplitter(object):
-    """ICU sentence splitter."""
+    """ICU sentence splitter.
+
+    Usage:
+
+    >>> splitter = SentSplitter(lang)
+    >>> sents: List[str] = splitter.split(paragraph)
+    """
 
     def __init__(self, lang: str = 'en'):
         """SentSplitter."""
