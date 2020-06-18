@@ -63,14 +63,6 @@ class Normalizer(object):
             self.lang_replace_pattern = \
                 make_pattern_from_keys(lang_replace_map.keys())
 
-        self.t2s = None
-        if lang == 'zh' or lang.startswith('zh_'):
-            try:
-                from opencc import OpenCC
-            except ImportError:
-                raise ImportError('OpenCC library not found')
-            self.t2s = OpenCC('t2s')
-
     def _num_replace_fn(self, match: re.Match) -> str:
         return str(int(match.group(0)))
 
@@ -101,9 +93,6 @@ class Normalizer(object):
 
         if self.lang_replace_pattern is not None:
             text = self.lang_replace_pattern(self._lang_replace_fn, text)
-
-        if self.t2s is not None:
-            text = self.t2s.convert(text)
 
         return text
 
