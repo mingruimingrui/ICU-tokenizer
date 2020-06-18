@@ -3,7 +3,8 @@ from typing import List, Union
 
 from icu import BreakIterator, Locale
 
-from icu_tokenizer.utils import apply_break_iterator, grubber_url_matcher
+from icu_tokenizer.url_utils import email_pattern, grubber_url_matcher
+from icu_tokenizer.utils import apply_break_iterator
 
 PROTECTED_TEMPLATE = '__PROTECTED_SEQUENCE_{}__'
 
@@ -19,7 +20,7 @@ class Tokenizer(object):
         self,
         lang: str = 'en',
         annotate_hyphens: bool = False,
-        protect_urls: bool = False,
+        protect_emails_urls: bool = False,
         extra_protected_patterns: List[Union[str, re.Pattern]] = [],
     ):
         """Tokenizer.
@@ -41,7 +42,8 @@ class Tokenizer(object):
         if self.annotate_hyphens:
             self.protected_patterns.append(self.PROTECTED_HYPHEN_PATTERN)
 
-        if protect_urls:
+        if protect_emails_urls:
+            self.protected_patterns.append(email_pattern)
             self.protected_patterns.append(grubber_url_matcher)
 
         for pattern in extra_protected_patterns:
