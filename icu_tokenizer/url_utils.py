@@ -62,7 +62,7 @@ email_pstr = r'({})'.format(
         domain=domain_pstr,
     )
 )
-email_pattern: regex.regex.Pattern = regex.compile(email_pstr, re.IGNORECASE)
+email_pattern = regex.compile(email_pstr, re.IGNORECASE)
 """Custom email matcher based on
 https://en.wikipedia.org/wiki/International_email
 """
